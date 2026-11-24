@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruang OSN Matematika</title>
+    
+    <!-- Memuat Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tema Tailwind dengan CSS Variables Dinamis -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        osn: {
+                            main: 'rgb(var(--color-main) / <alpha-value>)',
+                            dark: 'rgb(var(--color-dark) / <alpha-value>)',
+                            light: 'rgb(var(--color-light) / <alpha-value>)',
+                            paper: '#fdfbf7', /* Warna background kertas klasik */
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Memuat Google Fonts: Playfair Display & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS untuk Tema Dinamis & Akordion -->
+    <style>
+        /* Definisi Tema Tingkatan */
+        body.theme-sd {
+            --color-main: 220 38 38;    /* Merah (red-600) */
+            --color-dark: 153 27 27;    /* Merah Gelap (red-800) */
+            --color-light: 254 242 242; /* Putih Kemerahan (red-50) */
+        }
+        body.theme-smp {
+            --color-main: 37 99 235;    /* Biru (blue-600) */
+            --color-dark: 30 58 138;    /* Biru Dongker (blue-900) */
+            --color-light: 239 246 255; /* Putih Kebiruan (blue-50) */
+        }
+        body.theme-sma {
+            --color-main: 148 163 184;  /* Abu-abu Muda Kebiruan (slate-400) */
+            --color-dark: 105 119 153;     /* Slate Gelap untuk teks agar tetap terbaca */
+            --color-light: 241 245 249; /* Putih Abu-abu Kebiruan (slate-100) */
+        }
+
+        body {
+            background-color: theme('colors.osn.paper');
+            transition: background-color 0.5s ease;
+        }
+        
+        /* Animasi buka tutup akordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        .accordion-content.open {
+            max-height: 1500px;
+            opacity: 1;
+        }
+
+        /* Ikon panah */
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+        .chevron.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Styling klasik testámos dinamis */
+        .border-classic {
+            border: 1px solid rgb(var(--color-dark));
+            box-shadow: 4px 4px 0px 0px rgb(var(--color-dark));
+            transition: all 0.2s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+        }
+        .border-classic:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px rgb(var(--color-dark));
+        }
+        
+        .tab-btn {
+            position: relative;
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: rgb(var(--color-main));
+            transition: background-color 0.5s ease;
+        }
+    </style>
+</head>
+<body class="font-sans text-osn-dark min-h-screen flex flex-col theme-sd transition-colors duration-500">
+
+    <!-- Header Klasik -->
+    <header class="bg-osn-dark text-white pt-16 pb-12 px-6 text-center border-b-4 border-amber-600 shadow-lg relative overflow-hidden transition-colors duration-500">
+        <!-- Ornamen background tipis -->
+        <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 8px);"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-wide text-amber-50">Ruang OSN Matematika</h1>
+            <p class="text-lg md:text-xl text-osn-light font-light max-w-2xl mx-auto italic font-serif transition-colors duration-500">
+                Arsip Naskah Soal & Pembahasan Olimpiade Sains Nasional Matematika
+            </p>
+            <div class="mt-8 flex justify-center items-center opacity-75">
+                <div class="w-12 h-px bg-amber-500"></div>
+                <div class="mx-3 text-amber-500 font-serif text-2xl">❧</div>
+                <div class="w-12 h-px bg-amber-500"></div>
+            </div>
+
+            <nav class="mt-8 pt-6 border-t border-osn-light/30">
+                <ul class="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-sm md:text-base font-sans font-medium text-white/90">
+                    <li><a target="_blank" href="https://swrdfgd.github.io/" class="hover:text-amber-400 transition-colors duration-200">swrdfgd Hub</a></li>
+                    <li><a target="_blank" href="https://swrdfgd.github.io/RuangONMIPA/" class="hover:text-amber-400 transition-colors duration-200">Ruang ONMIPA</a></li>
+                    <!-- <li>
+                        <a target="_blank" href="#" class="text-amber-400 hover:text-amber-200 transition-all duration-200 border border-amber-600/50 bg-amber-900/30 hover:bg-amber-600/40 px-4 py-2 rounded-full shadow-sm">
+                            Donasi & Request Pembahasan
+                        </a>
+                    </li> -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Kontainer Aplikasi Utama -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 py-10" id="app-container">
+        <!-- Konten di-render oleh JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-osn-dark text-osn-light/60 py-8 text-center mt-12 transition-colors duration-500">
+        <div class="max-w-4xl mx-auto px-6">
+            <!--<p class="text-sm md:text-base font-sans font-medium text-osn-light/80 mb-2">
+                Pembaruan Naskah OSN Terkini
+            </p>
+            <p class="text-xs md:text-sm font-sans max-w-2xl mx-auto">
+                Penambahan Naskah Soal dan Pembahasan Lengkap OSN Matematika SMA 2024 — Tingkat Kabupaten hingga Final
+                <a target="_blank" href="#" class="text-amber-500 hover:text-amber-300 underline transition-colors duration-200">[link]</a>
+            </p>-->
+        </div>
+    </footer>
+
+    <!-- Logika Aplikasi (Vanilla JS) -->
+    <script>
+        // 1. STRUKTUR DATA (Link langsung per tahap/tingkatan di setiap tahun)
+        const dbOSN = {
+            "SD": [
+            ],
+            "SMP": [
+                {
+                    year: 2010,
+                    stages: [
+                        { name: "Tingkat Kabupaten/Kota (OSK)", link: "https://www.youtube.com/watch?v=Ui3YnTa7W1M" },
+                        { name: "Tingkat Provinsi (OSP)", link: "https://forum.pelatihan-osn.com/arsip/soal/Mjc5" },
+                        //{ name: "Tingkat Nasional (OSN)", link: "smp/2023/osn.html" }
+                    ]
+                }
+            ],
+            "SMA": [
+            ]
+        };
+
+        // 2. STATE APLIKASI
+        let state = {
+            activeTab: 'SD',
+            expandedYears: {}
+        };
+
+        // 3. FUNGSI RENDER UTAMA
+        function renderApp() {
+            const container = document.getElementById('app-container');
+            
+            let html = `
+                <!-- TINGKAT 1: Tabs Navigasi SD / SMP / SMA -->
+                <div class="flex flex-wrap justify-center border-b border-osn-dark/20 mb-8 font-serif text-lg gap-2 sm:gap-6">
+                    <button onclick="setTab('SD')" class="tab-btn px-6 py-3 transition-colors ${state.activeTab === 'SD' ? 'text-osn-dark font-bold active' : 'text-osn-dark/60 hover:text-osn-dark'}">
+                        Tingkat SD
+                    </button>
+                    <button onclick="setTab('SMP')" class="tab-btn px-6 py-3 transition-colors ${state.activeTab === 'SMP' ? 'text-osn-dark font-bold active' : 'text-osn-dark/60 hover:text-osn-dark'}">
+                        Tingkat SMP
+                    </button>
+                    <button onclick="setTab('SMA')" class="tab-btn px-6 py-3 transition-colors ${state.activeTab === 'SMA' ? 'text-osn-dark font-bold active' : 'text-osn-dark/60 hover:text-osn-dark'}">
+                        Tingkat SMA
+                    </button>
+                </div>
+
+                <!-- Kontainer Daftar Tahun -->
+                <div class="space-y-4">
+            `;
+
+            const currentData = dbOSN[state.activeTab] || [];
+            
+            if (currentData.length === 0) {
+                html += `<div class="text-center py-10 text-osn-dark/50 italic font-serif">Arsip naskah belum tersedia untuk tingkatan ini.</div>`;
+            }
+
+            // TINGKAT 2: Iterasi Tahun
+            currentData.forEach((yearData) => {
+                const isYearOpen = !!state.expandedYears[yearData.year];
+                
+                html += `
+                <div class="bg-white rounded-lg shadow-sm border border-osn-dark/15 overflow-hidden">
+                    <!-- Header Accordion Tahun -->
+                    <button onclick="toggleYear(${yearData.year})" class="w-full px-6 py-4 flex justify-between items-center bg-osn-light/50 hover:bg-osn-light transition-colors">
+                        <div class="flex items-center gap-3">
+                            <span class="font-serif text-2xl font-bold text-osn-dark">Tahun ${yearData.year}</span>
+                        </div>
+                        <svg class="w-6 h-6 text-osn-main chevron ${isYearOpen ? 'rotate' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+
+                    <!-- Konten Accordion Tahun (Langsung Link Tahapan Seleksi) -->
+                    <div class="accordion-content ${isYearOpen ? 'open' : ''}">
+                        <div class="p-5 sm:p-6 bg-osn-paper border-t border-osn-dark/10">
+                            <p class="text-sm text-osn-dark/70 mb-4 font-medium">Pilih Tahap Seleksi:</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                `;
+
+                // Generate Tombol Link Tiap Tingkatan/Tahap
+                yearData.stages.forEach(stage => {
+                    html += `
+                                <a href="${stage.link}" target="_blank"
+                                   class="border-classic bg-white text-osn-dark hover:bg-osn-dark hover:text-white font-serif font-semibold py-3.5 px-4 rounded text-center flex items-center justify-center gap-2 transition-all">
+                                    <span>${stage.name}</span>
+                                    <svg class="w-4 h-4 opacity-75 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                </a>
+                    `;
+                });
+
+                html += `
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        // 4. HANDLER INTERAKSI
+        window.setTab = function(tabName) {
+            if(state.activeTab !== tabName) {
+                state.activeTab = tabName;
+                
+                // Ubah Tema Warna CSS secara dinamis berdasarkan tab terpilih
+                document.body.className = `font-sans text-osn-dark min-h-screen flex flex-col theme-${tabName.toLowerCase()} transition-colors duration-500`;
+
+                // Reset dan buka tahun terbaru secara otomatis
+                state.expandedYears = {};
+                if(dbOSN[tabName] && dbOSN[tabName].length > 0) {
+                    state.expandedYears[dbOSN[tabName][0].year] = true;
+                }
+
+                renderApp();
+            }
+        };
+
+        window.toggleYear = function(year) {
+            state.expandedYears[year] = !state.expandedYears[year];
+            renderApp();
+        };
+
+        // 5. INISIALISASI
+        document.addEventListener('DOMContentLoaded', () => {
+            if(dbOSN[state.activeTab] && dbOSN[state.activeTab].length > 0) {
+                state.expandedYears[dbOSN[state.activeTab][0].year] = true;
+            }
+            renderApp();
+        });
+    </script>
+</body>
+</html>
